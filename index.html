@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 30px;
+  border-radius: 22px;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+  z-index: 2;
+}
+
+.message {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.slideshow {
+  width: 100%;
+  height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.slideshow img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+button {
+  font-size: 1.1em;
+  padding: 12px 26px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.yes {
+  background-color: #ff4d6d;
+  color: white;
+}
+
+.ofcourse {
+  background-color: #ffb3c6;
+  color: #7a1c2f;
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 24px;
+  animation: floatUp 5s linear forwards;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="mainCard">
+  <h1>Hey my love ❤️</h1>
+
+  <div class="message">
+    The only thing that should be on your lips… <br>
+    <strong>is mine 😘</strong>
+  </div>
+
+  <div class="slideshow">
+    <img id="slide" src="photo1.jpg">
+  </div>
+
+  <h2>Will you be my Valentine?</h2>
+
+  <button class="yes" onclick="celebrate()">Yes 💖</button>
+  <button class="ofcourse" onclick="celebrate()">Of course 😘</button>
+</div>
+
+<script>
+// Slideshow images
+const photos = [
+  "photo1.jpg",
+  "photo2.jpg",
+  "photo3.jpg",
+  "photo4.jpg"
+];
+
+let index = 0;
+let slideshowStarted = false;
+let slideshowInterval;
+
+// Start slideshow ONLY after click
+function startSlideshow() {
+  if (slideshowStarted) return;
+  slideshowStarted = true;
+
+  slideshowInterval = setInterval(() => {
+    index = (index + 1) % photos.length;
+    document.getElementById("slide").src = photos[index];
+  }, 4000);
+}
+
+// Celebration on click
+function celebrate() {
+  document.getElementById("music").play();
+  startSlideshow();
+
+  for (let i = 0; i < 35; i++) {
+    createHeart();
+  }
+
+  document.getElementById("mainCard").innerHTML += `
+    <p style="margin-top:15px;">
+      You’ll always be my Valentine ❤️
+    </p>
+  `;
+}
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 5000);
+}
+</script>
+
+</body>
+</html>
